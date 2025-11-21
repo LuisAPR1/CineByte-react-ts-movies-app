@@ -4,7 +4,7 @@ A full-stack web application for discovering and managing movies and TV shows. B
 This project was developed as part of a university course assignment.
 
 
-> ** First time here?** Check out the [**Complete Installation Guide (SETUP.md)**](SETUP.md) for detailed instructions on how to install Node.js, configure SMTP, and run the application.
+> **First time here?** Check out the [**Complete Installation Guide (SETUP.md)**](SETUP.md) for detailed instructions on how to install Node.js, configure SMTP, and run the application.
 
 ## Features
 
