@@ -2,6 +2,8 @@
 
 A full-stack web application for discovering and managing movies and TV shows. Built with React, TypeScript, and Node.js, this app provides users with a comprehensive platform to browse popular content, search for specific titles, manage favorites, and maintain user accounts.
 
+> **🚀 First time here?** Check out the [**Complete Installation Guide (SETUP.md)**](SETUP.md) for detailed instructions on how to install Node.js, configure SMTP, and run the application.
+
 ## Features
 
 ### Frontend Features
@@ -72,39 +74,47 @@ DAW/
 
 ## Installation
 
-### Prerequisites
-- Node.js (v16 or higher)
-- npm or yarn package manager
+> **📖 For detailed installation and configuration instructions, see [SETUP.md](SETUP.md)**
 
-### Setup Instructions
+### Quick Start
 
-1. **Clone the repository**
+1. **Check Node.js** (v16+)
    ```bash
-   git clone <repository-url>
-   cd DAW
+   node --version
+   npm --version
    ```
 
-2. **Install frontend dependencies**
+2. **Install server dependencies**
    ```bash
-   cd client
+   cd server
    npm install
    ```
 
-3. **Install backend dependencies**
+3. **Install client dependencies**
    ```bash
-   cd ../server
+   cd ../client
    npm install
    ```
 
-4. **Environment Setup**
+4. **Configure environment variables**
    
-   Create a `.env` file in the server directory with the following variables:
+   Create `.env` in the `server` folder:
    ```env
    JWT_SECRET=your_jwt_secret_here
-   SMTP_HOST=your_smtp_host
-   SMTP_PORT=587
-   SMTP_USER=your_email@example.com
-   SMTP_PASS=your_email_password
+   ```
+   
+   Edit `server/server/serverInfo.json` with SMTP credentials:
+   ```json
+   {
+     "smtp": {
+       "host": "smtp.gmail.com",
+       "port": 587,
+       "auth": {
+         "user": "your_email@gmail.com",
+         "pass": "your_app_password"
+       }
+     }
+   }
    ```
 
 ## Running the Application
