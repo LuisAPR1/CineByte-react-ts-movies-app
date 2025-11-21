@@ -69,9 +69,9 @@ function Favorites() {
   }
 
   return (
-    <div>
+    <div className="favorites-wrapper">
       <h2>Your Favorite Movies</h2>
-      <div className="mediaCard" style={{ marginTop: "100px" }}>
+      <div className="mediaCard favorites-grid">
         {/* Itera sobre os favoritos e renderiza os detalhes de cada filme */}
         {favorites.map((item) => (
           <div
@@ -83,8 +83,8 @@ function Favorites() {
               <img
                 src={
                   item.poster_path
-                    ? `https://image.tmdb.org/t/p/w200/${item.poster_path}` // URL da imagem do filme
-                    : "https://dummyimage.com/200x300/cccccc/000000&text=No+Image" // Placeholder caso não haja imagem
+                    ? `https://image.tmdb.org/t/p/w300/${item.poster_path}` // URL da imagem do filme
+                    : "https://dummyimage.com/400x600/0b1024/ffffff&text=No+Image" // Placeholder caso não haja imagem
                 }
                 alt={item.title}
               />

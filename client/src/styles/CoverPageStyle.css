@@ -1,116 +1,202 @@
 /* CoverPageStyle.css */
 
-
 .cover {
-  text-align: center;
-  width: 80%;
-  margin: 18px auto 0;
   position: relative;
-  text-transform: capitalize;
+  display: grid;
+  grid-template-columns: 1.05fr 0.95fr;
+  gap: 32px;
+  align-items: center;
+  width: 100%;
+  background:
+    linear-gradient(120deg, rgba(255, 74, 99, 0.16), rgba(6, 9, 20, 0.9)),
+    linear-gradient(200deg, rgba(255, 122, 140, 0.16), rgba(7, 12, 28, 0.92));
+  border: 1px solid var(--border);
+  border-radius: 32px;
+  padding: 56px;
+  overflow: hidden;
+  box-shadow: var(--shadow-soft);
 }
 
+.cover.has-art {
+  grid-template-columns: 1fr 0.95fr;
+}
 
-.cover::before {
+.cover::after {
   content: "";
   position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  background-color: rgba(0, 0, 0, 0.6);
-  border-bottom-left-radius: 240px;
-  border-bottom-right-radius: 240px;
+  inset: 0;
+  background:
+    radial-gradient(circle at 18% 18%, rgba(255, 74, 99, 0.2), transparent 30%),
+    radial-gradient(circle at 85% 35%, rgba(255, 122, 140, 0.18), transparent 36%);
+  opacity: 0.8;
+  pointer-events: none;
 }
 
-.cover > img {
-  height: 500px;
-  width: 100%;
-  border-bottom-left-radius: 230px;
-  border-bottom-right-radius: 230px;
-}
-
-
-.cover .coverText {
-  position: absolute;
-  color: #fff;
-  top: 45%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  width: 100%;
+.coverText {
+  position: relative;
+  z-index: 1;
   display: flex;
   flex-direction: column;
-  justify-content: space-evenly;
-  height: 30%;
-  text-shadow: 1px 1px 3px black;
-  line-height: 1;
+  gap: 16px;
 }
 
-
-.cover .coverText > h1 {
-  font-size: 3rem;
-  font-family: "Roboto", sans-serif;
-  letter-spacing: 1px;
+.coverText h1 {
+  font-size: clamp(36px, 5vw, 52px);
+  font-weight: 700;
+  color: #ffffff;
+  letter-spacing: -0.02em;
+  text-shadow: 0 12px 28px rgba(0, 0, 0, 0.38);
 }
 
-
-.cover .coverText > p {
-  font-size: 20px;
+.coverText p {
+  font-size: 18px;
+  color: var(--muted);
+  max-width: 560px;
 }
 
-
-.cover .coverText em {
+.coverText em {
   font-size: 15px;
-  margin-top: 10px;
+  color: #e8eefc;
+  font-style: normal;
+  opacity: 0.9;
+  padding: 12px 14px;
+  border-radius: 14px;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  background: rgba(255, 255, 255, 0.02);
+  display: inline-flex;
+  gap: 10px;
 }
-
 
 .searchBar {
-  position: relative;
+  display: flex;
+  gap: 12px;
+  align-items: center;
+  background: rgba(255, 255, 255, 0.06);
+  padding: 12px 14px;
+  border-radius: 16px;
+  border: 1px solid var(--border);
+  box-shadow: var(--shadow-soft);
+  width: min(540px, 100%);
+  margin-top: 8px;
+  backdrop-filter: blur(10px);
 }
 
-.searchBar > input{
-  color:#000;
-  margin: auto;
-  outline: none;
-  border: none;
-  border-radius: 20px;
-  position: absolute;
-  top: 100%;
-  transform: translate(-50%, -50%);
-  text-align: center;
-  height: 45px;
-}
-
-.searchBar > button {
-  color:#fff;
-  margin: auto;
-  outline: none;
-  border: none;
-  border-radius: 20px;
-  position: absolute;
-  top: 100%;
-  transform: translate(-50%, -50%);
-  text-align: center;
-  height: 45px;
-}
-
-.searchBar > input {
-  
-  width: 70%;
-  box-shadow: 1px 1px 6px 2px grey;
-  padding: 8px;
+.searchBar input {
+  flex: 1;
+  background: rgba(255, 255, 255, 0.08);
+  border: 1px solid transparent;
+  color: #fff;
+  border-radius: 12px;
+  padding: 14px 16px;
   font-size: 16px;
+  outline: none;
 }
 
-.searchBar > input::placeholder {
-  font-size: 14px;
+.searchBar input::placeholder {
+  color: rgba(255, 255, 255, 0.68);
 }
 
-.searchBar > button {
-  padding: 0 25px;
-  left: 81%;
-  font-size: 15px;
-  background: linear-gradient(90deg, rgba(100, 100, 100, 1), rgba(50, 50, 50, 1) 100%);
-  font-weight: bolder;
+.searchBar button {
+  background: linear-gradient(120deg, var(--accent), #ff6b80);
+  color: #0d0f16;
+  border: none;
+  border-radius: 12px;
+  padding: 12px 18px;
+  font-weight: 800;
   cursor: pointer;
+  transition: transform 0.15s ease, filter 0.2s ease;
+  box-shadow: 0 15px 40px rgba(0, 0, 0, 0.35);
+}
+
+.searchBar button:hover {
+  filter: brightness(1.05);
+  transform: translateY(-1px);
+}
+
+.coverStats {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+  gap: 12px;
+  margin-top: 6px;
+}
+
+.stat {
+  border: 1px solid var(--border);
+  border-radius: 14px;
+  padding: 12px 14px;
+  background: rgba(255, 255, 255, 0.03);
+  box-shadow: 0 12px 36px rgba(0, 0, 0, 0.25);
+}
+
+.stat small {
+  display: block;
+  color: var(--muted);
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  font-size: 11px;
+  margin-bottom: 6px;
+}
+
+.stat strong {
+  color: #ffffff;
+  font-size: 17px;
+  letter-spacing: -0.01em;
+}
+
+.coverImage {
+  position: relative;
+  z-index: 1;
+  width: 100%;
+  height: 100%;
+  min-height: 260px;
+  border-radius: 26px;
+  overflow: hidden;
+  border: 1px solid rgba(255, 74, 99, 0.23);
+  background:
+    radial-gradient(circle at 20% 20%, rgba(255, 74, 99, 0.18), transparent 40%),
+    radial-gradient(circle at 82% 40%, rgba(255, 122, 140, 0.14), transparent 42%),
+    var(--card);
+  box-shadow: var(--shadow-soft);
+}
+
+.coverGlow {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(180deg, rgba(5, 6, 15, 0.12), rgba(5, 6, 15, 0.92));
+  z-index: 1;
+}
+
+.coverImage img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+  filter: saturate(1.05);
+}
+
+@media (max-width: 960px) {
+  .cover {
+    grid-template-columns: 1fr;
+    padding: 42px;
+  }
+
+  .coverImage {
+    order: -1;
+    max-height: 320px;
+  }
+}
+
+@media (max-width: 600px) {
+  .cover {
+    padding: 30px;
+  }
+
+  .searchBar {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .searchBar button {
+    width: 100%;
+  }
 }

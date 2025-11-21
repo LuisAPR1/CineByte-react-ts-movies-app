@@ -1,0 +1,114 @@
+:root {
+  color-scheme: dark;
+  --bg-1: #040610;
+  --bg-2: #070c1c;
+  --card: rgba(255, 255, 255, 0.04);
+  --card-strong: rgba(255, 255, 255, 0.08);
+  --border: rgba(255, 255, 255, 0.12);
+  --text: #f7f8fb;
+  --muted: #9daecc;
+  --accent: #ff4a63;
+  --accent-2: #ff7a8c;
+  --shadow-soft: 0 18px 70px rgba(2, 4, 12, 0.55);
+  --glow: 0 18px 48px rgba(255, 74, 99, 0.18);
+  --glass: rgba(255, 255, 255, 0.03);
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  font-family: "Sora", "Space Grotesk", system-ui, -apple-system, sans-serif;
+  background:
+    radial-gradient(circle at 18% 20%, rgba(255, 74, 99, 0.16), transparent 28%),
+    radial-gradient(circle at 78% 12%, rgba(255, 122, 140, 0.12), transparent 32%),
+    linear-gradient(150deg, var(--bg-1) 0%, #050814 36%, var(--bg-2) 78%);
+  color: var(--text);
+  min-height: 100vh;
+  line-height: 1.6;
+  letter-spacing: -0.009em;
+  -webkit-font-smoothing: antialiased;
+}
+
+body::before {
+  content: "";
+  position: fixed;
+  inset: -60px;
+  pointer-events: none;
+  background:
+    radial-gradient(circle at 16% 80%, rgba(255, 74, 99, 0.1), transparent 30%),
+    radial-gradient(circle at 86% 72%, rgba(255, 122, 140, 0.1), transparent 36%);
+  filter: blur(45px);
+  opacity: 0.9;
+  z-index: -2;
+}
+
+body::after {
+  content: "";
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  background: linear-gradient(135deg, rgba(255, 255, 255, 0.03), transparent 45%),
+    linear-gradient(0deg, rgba(7, 12, 28, 0.8), transparent 18%, rgba(7, 12, 28, 0.85));
+  mix-blend-mode: screen;
+  z-index: -1;
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+a:hover {
+  color: #ffffff;
+}
+
+main.app-main {
+  width: min(1240px, 94vw);
+  margin: 0 auto;
+  padding: 128px 0 96px;
+}
+
+h1,
+h2,
+h3,
+h4 {
+  margin: 0;
+  line-height: 1.2;
+  letter-spacing: -0.02em;
+}
+
+p {
+  margin: 0;
+  color: var(--muted);
+}
+
+button,
+input,
+select,
+textarea {
+  font-family: "Sora", "Space Grotesk", system-ui, -apple-system, sans-serif;
+}
+
+.pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 8px 14px;
+  border-radius: 999px;
+  background: rgba(255, 74, 99, 0.12);
+  border: 1px solid rgba(255, 74, 99, 0.35);
+  color: #ffe7ed;
+  text-transform: uppercase;
+  font-size: 12px;
+  letter-spacing: 0.08em;
+}
+
+::selection {
+  background: rgba(255, 74, 99, 0.24);
+  color: #fff;
+}

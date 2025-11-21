@@ -1,7 +1,10 @@
 // pages/MovieDetails.tsx
-import React, { useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import "../styles/MovieDetailsStyle.css"; // Importa o CSS para estilização
+import axios from "axios";
+import { AuthContext } from "../context/AuthContext";
+import { bearerToken } from "../modules/ApiLinks";
 
 // Importa o serviço para buscar os detalhes do filme e a tipagem associada
 import {
@@ -18,6 +21,46 @@ const MovieDetails: React.FC = () => {
 
   // Estado para indicar se os dados estão sendo carregados.
   const [loading, setLoading] = useState(true);
+  const [favoriteLoading, setFavoriteLoading] = useState(false);
+  const [isFavorite, setIsFavorite] = useState(false);
+
+  const { token } = useContext(AuthContext);
+
+  const toggleFavorite = async () => {
+    if (!id) return;
+    if (!token) {
+      alert("Login required to save favorites.");
+      return;
+    }
+    setFavoriteLoading(true);
+    try {
+      if (isFavorite) {
+        await axios.delete(`http://localhost:8080/favorites/${id}`, {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        });
+        setIsFavorite(false);
+      } else {
+        await axios.post(
+          "http://localhost:8080/favorites",
+          { movieId: id },
+          {
+            headers: {
+              "Content-Type": "application/json",
+              Authorization: `Bearer ${token}`,
+            },
+          }
+        );
+        setIsFavorite(true);
+      }
+    } catch (error) {
+      console.error("Error updating favorite", error);
+      alert("Could not update favorites. Please try again.");
+    } finally {
+      setFavoriteLoading(false);
+    }
+  };
 
   // Efeito para buscar os detalhes do filme quando o `id` mudar.
   useEffect(() => {
@@ -29,6 +72,25 @@ const MovieDetails: React.FC = () => {
     };
     fetchData();
   }, [id]); // Executa sempre que `id` mudar.
+
+  useEffect(() => {
+    const fetchFavoriteFlag = async () => {
+      if (!token || !id) {
+        setIsFavorite(false);
+        return;
+      }
+      try {
+        const response = await axios.get("http://localhost:8080/favorites", {
+          headers: { Authorization: `Bearer ${token}` },
+        });
+        const ids: string[] = response.data.favorites || [];
+        setIsFavorite(ids.includes(id));
+      } catch (error) {
+        console.error("Error checking favorites", error);
+      }
+    };
+    fetchFavoriteFlag();
+  }, [id, token]);
 
   // Exibe uma mensagem de carregamento enquanto os dados estão sendo buscados.
   if (loading) {
@@ -91,9 +153,20 @@ const MovieDetails: React.FC = () => {
               <span className="star">★</span>
               <b>{vote_average.toFixed(1)}</b>
               <span style={{ marginLeft: "8px" }}>
-                ({vote_count.toLocaleString()} votos)
+                ({vote_count.toLocaleString()} votes)
               </span>
             </div>
+            <button
+              className="favoriteToggle"
+              onClick={toggleFavorite}
+              disabled={favoriteLoading}
+            >
+              {favoriteLoading
+                ? "Saving..."
+                : isFavorite
+                ? "Remove from favorites"
+                : "Add to favorites"}
+            </button>
 
             {/* Data de lançamento e duração do filme */}
             <div className="releaseRuntime">

@@ -45,9 +45,10 @@ const CreateAccount: React.FC = () => {
   // Renderiza o formulário e exibe mensagens de feedback.
   return (
     <div className="create-account-container">
-      <h1 style={{ fontFamily: "Tahoma, sans-serif" }}>
-        Create Account
-      </h1>
+      <h1>Create Account</h1>
+      <p className="create-account-subtitle">
+        Build your profile, save favorites, and get tailored suggestions.
+      </p>
       <form onSubmit={handleSubmit} className="create-account-form">
         {/* Campo para o nome de utilizador */}
         <input
@@ -92,7 +93,6 @@ const CreateAccount: React.FC = () => {
         <button
           type="submit"
           className="create-account-button"
-          style={{ backgroundColor: "black", fontFamily: "Tahoma, sans-serif" }}
         >
           Create Account
         </button>

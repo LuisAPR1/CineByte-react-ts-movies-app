@@ -36,9 +36,9 @@ const Home: React.FC = () => {
     <div>
       {/* Componente de página de capa */}
       <CoverPage
-        title="Welcome to Movies" // Título principal da página.
-        description="The best Website to stay updated on movies!" // Descrição do site.
-        catchyPhrase="Check out new releases, popular titles, and much more!" // Frase de destaque.
+        title="CineByte" // Título principal da página.
+        description="Discover curated cinema: verified releases, trends, and hidden gems in one place." // Descrição do site.
+        catchyPhrase="Handpicked movies and shows to avoid the noise." // Frase de destaque.
         headerImage={coverImage} // Imagem de capa.
         showSearch={true} // Exibe a barra de pesquisa.
         showHeaderImage={true} // Exibe a imagem de cabeçalho.

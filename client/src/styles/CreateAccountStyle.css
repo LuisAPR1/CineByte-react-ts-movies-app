@@ -1,44 +1,83 @@
 /* CreateAccount.css */
 
 .create-account-container {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    height: 100vh;
-    background-color: #f5f5f5;
-    padding: 20px;
-  }
-  
-  .create-account-form {
-    display: flex;
-    flex-direction: column;
-    width: 300px;
-  }
-  
-  .create-account-input {
-    margin: 10px 0;
-    padding: 10px;
-    font-size: 16px;
-  }
-  
-  .create-account-button {
-    margin-top: 20px;
-    padding: 10px 20px;
-    font-size: 16px;
-    background-color: #007bff;
-    color: #fff;
-    border: none;
-    cursor: pointer;
-  }
-  
-  .create-account-success {
-    color: green;
-    margin-top: 10px;
-  }
-  
-  .create-account-error {
-    color: red;
-    margin-top: 10px;
-  }
-  
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  min-height: 70vh;
+  padding: 32px;
+  gap: 8px;
+}
+
+.create-account-container h1 {
+  color: #fff;
+  margin-bottom: 6px;
+}
+
+.create-account-subtitle {
+  color: var(--muted);
+  margin-bottom: 14px;
+  text-align: center;
+  max-width: 540px;
+}
+
+.create-account-form {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  width: min(460px, 100%);
+  background:
+    linear-gradient(160deg, rgba(255, 74, 99, 0.12), rgba(255, 122, 140, 0.08)),
+    var(--card);
+  border: 1px solid var(--border);
+  border-radius: 18px;
+  padding: 28px;
+  box-shadow: 0 18px 48px rgba(0, 0, 0, 0.45);
+}
+
+.create-account-input {
+  background: rgba(255, 255, 255, 0.06);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  padding: 14px 16px;
+  color: #fff;
+  font-size: 16px;
+  outline: none;
+  transition: border-color 0.2s ease, transform 0.15s ease, box-shadow 0.2s ease;
+}
+
+.create-account-input:focus {
+  border-color: rgba(255, 74, 99, 0.45);
+  transform: translateY(-1px);
+  box-shadow: 0 10px 28px rgba(0, 0, 0, 0.3);
+}
+
+.create-account-button {
+  margin-top: 6px;
+  padding: 14px 20px;
+  font-size: 16px;
+  font-weight: 800;
+  background: linear-gradient(120deg, var(--accent), #ff6b80);
+  color: #0d0f16;
+  border: none;
+  border-radius: 12px;
+  cursor: pointer;
+  box-shadow: 0 15px 40px rgba(0, 0, 0, 0.28);
+  transition: filter 0.2s ease, transform 0.15s ease;
+}
+
+.create-account-button:hover {
+  filter: brightness(1.03);
+  transform: translateY(-1px);
+}
+
+.create-account-success {
+  color: #7fffd6;
+  margin-top: 10px;
+}
+
+.create-account-error {
+  color: #ff7b7b;
+  margin-top: 10px;
+}

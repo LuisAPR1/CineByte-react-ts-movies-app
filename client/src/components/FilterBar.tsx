@@ -11,12 +11,12 @@ interface FilterBarProps {
   }) => void;
 }
 
-// Exemplo de gêneros (substitua se quiser buscar da API)
+// Example genres (static list)
 const mockGenres = [
-  { id: 28, name: "Ação" },
-  { id: 12, name: "Aventura" },
-  { id: 16, name: "Animação" },
-  { id: 35, name: "Comédia" },
+  { id: 28, name: "Action" },
+  { id: 12, name: "Adventure" },
+  { id: 16, name: "Animation" },
+  { id: 35, name: "Comedy" },
   { id: 18, name: "Drama" },
 ];
 
@@ -53,7 +53,7 @@ const FilterBar: React.FC<FilterBarProps> = ({ onFilterChange }) => {
         value={selectedGenre ?? ""}
         onChange={(e) => setSelectedGenre(e.target.value ? Number(e.target.value) : null)}
       >
-        <option value="">-- Gênero --</option>
+        <option value="">-- Genre --</option>
         {mockGenres.map((g) => (
           <option key={g.id} value={g.id}>
             {g.name}
@@ -67,7 +67,7 @@ const FilterBar: React.FC<FilterBarProps> = ({ onFilterChange }) => {
         value={selectedYear ?? ""}
         onChange={(e) => setSelectedYear(e.target.value ? Number(e.target.value) : null)}
       >
-        <option value="">-- Ano --</option>
+        <option value="">-- Year --</option>
         {yearOptions.map((year) => (
           <option key={year} value={year}>
             {year}

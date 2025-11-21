@@ -53,7 +53,8 @@ const Login: React.FC = () => {
 
   return (
     <div className="login-container">
-      <h1 style={{ fontFamily: "Tahoma, sans-serif" }}>Login</h1>
+      <h1>Login</h1>
+      <p className="login-subtitle">Jump back into your watchlist in seconds.</p>
 
       {/* Formulário de login */}
       <form onSubmit={handleSubmit} className="login-form">

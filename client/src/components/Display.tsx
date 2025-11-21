@@ -225,109 +225,106 @@ const Display: React.FC<DataProps> = ({
     return date.toLocaleDateString("en-US", options);
   };
 
+  const formattedItems = showItems.map((item) => ({
+    ...item,
+    rating: Math.round(item.vote_average * 10) / 10,
+  }));
+
   return (
     <div className="MovieShowWrapper">
-      {loading ? (
+      {loading && (
         <div className="loadingOverlay">
-          <CircularProgress size={80} style={{ color: "#ffffff" }} />
+          <CircularProgress size={64} style={{ color: "#ffffff" }} />
           <p>Loading</p>
         </div>
+      )}
+
+      <div className="mediaHeading">
+        <h1>{itemHeading}</h1>
+      </div>
+
+      {formattedItems.length === 0 && !loading ? (
+        <div className="emptyState">No results to show.</div>
       ) : (
-        <>
-          <div className="mediaHeading">
-            <h1>{itemHeading}</h1>
-          </div>
+        <div className="mediaCard">
+          {formattedItems.map((item) => {
+            const isFavorited = favoriteIds.includes(item.id.toString());
 
-          <div className="mediaCard">
-            {showItems.map((item) => {
-              const isFavorited = favoriteIds.includes(item.id.toString());
+            return (
+              <div className="media" key={item.id}>
+                <div
+                  className="mediaImage"
+                  onClick={() => navigate(`/movie/${item.id}`)}
+                >
+                  <img
+                    src={
+                      item.poster_path
+                        ? `https://image.tmdb.org/t/p/w300/${item.poster_path}`
+                        : "https://dummyimage.com/400x600/0b1024/ffffff&text=No+Image"
+                    }
+                    alt={item.title || item.name}
+                  />
+                  <span>{item.rating}</span>
 
-              return (
-                <div className="media" key={item.id}>
-                  <div
-                    className="mediaImage"
-                    style={{ position: "relative" }}
-                    onClick={() => navigate(`/movie/${item.id}`)}
+                  {/* Ícone de coração no canto superior direito */}
+                  <button
+                    onClick={(e) => {
+                      e.stopPropagation();
+                      handleFavoriteClick(item.id.toString());
+                    }}
                   >
-                    <img
-                      src={
-                        item.poster_path
-                          ? `https://image.tmdb.org/t/p/w200/${item.poster_path}`
-                          : "https://dummyimage.com/200x300/cccccc/000000&text=No+Image"
-                      }
-                      alt={item.title || item.name}
-                    />
-                    <span>{Math.round(item.vote_average * 10) / 10}</span>
-
-                    {/* Ícone de coração no canto superior direito */}
-                    <button
-                      style={{
-                        position: "absolute",
-                        top: "8px",
-                        right: "8px",
-                        border: "none",
-                        background: "transparent",
-                        cursor: "pointer",
-                        fontSize: "1.5rem",
-                      }}
-                      onClick={(e) => {
-                        e.stopPropagation();
-                        handleFavoriteClick(item.id.toString());
-                      }}
-                    >
-                      {isFavorited ? (
-                        <AiFillHeart color="#FF5555" />
-                      ) : (
-                        <AiOutlineHeart color="#DDDDDD" />
-                      )}
-                    </button>
-                  </div>
-
-                  <div className="mediaInfo">
-                    {moviesOn && (
-                      <>
-                        <h4>{item.title}</h4>
-                        <p>
-                          {item.release_date
-                            ? getFormattedDate(item.release_date)
-                            : "N/A"}
-                        </p>
-                      </>
+                    {isFavorited ? (
+                      <AiFillHeart color="#FF5555" />
+                    ) : (
+                      <AiOutlineHeart color="#DDDDDD" />
                     )}
-                    {tvShowOn && (
-                      <>
-                        <h4>{item.name}</h4>
-                        <p>
-                          {item.first_air_date
-                            ? getFormattedDate(item.first_air_date)
-                            : "N/A"}
-                        </p>
-                      </>
-                    )}
-                  </div>
+                  </button>
                 </div>
-              );
-            })}
 
-            {showButtons && !customMedia && (
-              <div className="buttons">
-                {currentPage > 1 && (
-                  <button className="btnPrev" onClick={prevItemsPage}>
-                    Back
-                  </button>
-                )}
-                <p>
-                  Page <b>{currentPage}</b>
-                </p>
-                {currentPage < totalPages && (
-                  <button className="btnNext" onClick={nextItemsPage}>
-                    Next
-                  </button>
-                )}
+                <div className="mediaInfo">
+                  {moviesOn && (
+                    <>
+                      <h4>{item.title}</h4>
+                      <p>
+                        {item.release_date
+                          ? getFormattedDate(item.release_date)
+                          : "N/A"}
+                      </p>
+                    </>
+                  )}
+                  {tvShowOn && (
+                    <>
+                      <h4>{item.name}</h4>
+                      <p>
+                        {item.first_air_date
+                          ? getFormattedDate(item.first_air_date)
+                          : "N/A"}
+                      </p>
+                    </>
+                  )}
+                </div>
               </div>
-            )}
-          </div>
-        </>
+            );
+          })}
+        </div>
+      )}
+
+      {showButtons && !customMedia && formattedItems.length > 0 && (
+        <div className="buttons">
+          {currentPage > 1 && (
+            <button className="btnPrev" onClick={prevItemsPage}>
+              Back
+            </button>
+          )}
+          <p>
+            Page <b>{currentPage}</b>
+          </p>
+          {currentPage < totalPages && (
+            <button className="btnNext" onClick={nextItemsPage}>
+              Next
+            </button>
+          )}
+        </div>
       )}
     </div>
   );

@@ -15,7 +15,7 @@ const EditAccount: React.FC = () => {
   const { user } = useContext(AuthContext);
 
   // Estados locais para lidar com as informações do utilizador e modos de edição.
-  const [name, setName] = useState(user?.username || "Nome do utilizador");
+  const [name, setName] = useState(user?.username || "User name");
   const [isEditingName, setIsEditingName] = useState(false);
   const [isEditingPassword, setIsEditingPassword] = useState(false);
   const [currentPassword, setCurrentPassword] = useState("");
@@ -47,20 +47,20 @@ const EditAccount: React.FC = () => {
 
   // Função para apagar a conta do utilizador.
   const handleDeleteAccount = async () => {
-    const confirma = window.confirm(
-      "Tem certeza que deseja apagar a conta? Esta ação é irreversível."
+    const confirmDelete = window.confirm(
+      "Are you sure you want to delete your account? This cannot be undone."
     );
-    if (!confirma) return;
+    if (!confirmDelete) return;
 
     try {
       // Chama o serviço para apagar a conta.
       await deleteAccount();
-      alert("Conta apagada com sucesso!");
+      alert("Account deleted successfully.");
       localStorage.removeItem("token"); // Remove o token armazenado.
       window.location.href = "/login"; // Redireciona para a página de login.
     } catch (err) {
       console.error(err);
-      alert("Erro ao apagar a conta.");
+      alert("Error deleting the account.");
     }
   };
 
@@ -69,41 +69,40 @@ const EditAccount: React.FC = () => {
     try {
       // Chama o serviço para atualizar o nome.
       await updateName(name);
-      alert("Nome atualizado com sucesso!");
+      alert("Name updated successfully!");
       toggleEditName(); // Sai do modo de edição.
     } catch (err) {
       console.error(err);
-      alert("Erro ao atualizar o nome.");
+      alert("Error updating the name.");
     }
   };
 
   // Função para salvar a nova senha.
   const savePassword = async () => {
     if (newPassword !== confirmPassword) {
-      alert("As passwords não coincidem.");
+      alert("Passwords do not match.");
       return;
     }
 
     try {
       // Chama o serviço para atualizar a senha.
       await updatePassword(currentPassword, newPassword);
-      alert("Password alterada com sucesso!");
+      alert("Password updated successfully!");
       toggleEditPassword(); // Sai do modo de edição.
     } catch (err) {
       console.error(err);
-      alert("Erro ao alterar a password.");
+      alert("Error updating the password.");
     }
   };
 
   // Renderiza o formulário de edição de conta com diferentes seções.
   return (
-    <div className="page-wrapper" style={{ marginTop: "80px" }}>
-      <h1 className="page-title">Editar Conta</h1>
+    <div className="page-wrapper">
+      <h1 className="page-title">Edit Account</h1>
 
       <div className="card">
-        {/* Seção para editar o nome do utilizador */}
         <div className="section">
-          <label className="label">Nome:</label>
+          <label className="label">Name:</label>
           <div className="inline">
             {isEditingName ? (
               <>
@@ -114,44 +113,42 @@ const EditAccount: React.FC = () => {
                   className="input"
                 />
                 <button className="save-button" onClick={saveName}>
-                  Guardar
+                  Save
                 </button>
                 <button className="cancel-button" onClick={toggleEditName}>
-                  Cancelar
+                  Cancel
                 </button>
               </>
             ) : (
               <>
                 <span className="text">{name}</span>
                 <button className="edit-button" onClick={toggleEditName}>
-                  Editar
+                  Edit
                 </button>
               </>
             )}
           </div>
         </div>
 
-        {/* Exibe o e-mail do utilizador, apenas leitura */}
         <div className="section">
           <label className="label">Email:</label>
           <input
             type="email"
-            value={user?.email || "email@exemplo.com"}
+            value={user?.email || "email@example.com"}
             readOnly
             className="input readonly-input"
           />
         </div>
 
-        {/* Seção para alterar a senha do utilizador */}
         <div className="section">
-          <h2 className="sub-title">Alterar Password</h2>
+          <h2 className="sub-title">Change Password</h2>
           {!isEditingPassword ? (
             <button className="edit-button" onClick={toggleEditPassword}>
-              Alterar Password
+              Change Password
             </button>
           ) : (
             <div className="password-section">
-              <label className="label">Password Atual:</label>
+              <label className="label">Current Password:</label>
               <input
                 type="password"
                 name="currentPassword"
@@ -160,7 +157,7 @@ const EditAccount: React.FC = () => {
                 className="input"
               />
 
-              <label className="label">Nova Password:</label>
+              <label className="label">New Password:</label>
               <input
                 type="password"
                 name="newPassword"
@@ -169,7 +166,7 @@ const EditAccount: React.FC = () => {
                 className="input"
               />
 
-              <label className="label">Confirmar Nova Password:</label>
+              <label className="label">Confirm New Password:</label>
               <input
                 type="password"
                 name="confirmPassword"
@@ -180,20 +177,19 @@ const EditAccount: React.FC = () => {
 
               <div className="inline">
                 <button className="save-button" onClick={savePassword}>
-                  Guardar Password
+                  Save Password
                 </button>
                 <button className="cancel-button" onClick={toggleEditPassword}>
-                  Cancelar
+                  Cancel
                 </button>
               </div>
             </div>
           )}
         </div>
 
-        {/* Botão para apagar a conta */}
         <div className="section">
           <button className="delete-button" onClick={handleDeleteAccount}>
-            Apagar Conta
+            Delete Account
           </button>
         </div>
       </div>

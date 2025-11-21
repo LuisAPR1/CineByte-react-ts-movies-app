@@ -27,9 +27,6 @@ const SearchResults: React.FC = () => {
 
   return (
     <div>
-      {/* Cabeçalho com o termo pesquisado */}
-      <h1>Search Results for "{query}"</h1>
-
       {/* Componente Display para exibir os resultados da pesquisa */}
       <Display
         apiEndPoint="" // Não utiliza endpoint fixo, pois usa dados personalizados
@@ -37,7 +34,7 @@ const SearchResults: React.FC = () => {
         showButtons={false} // Não exibe botões de navegação
         tvShowOn={false} // Define que séries de TV não serão exibidas
         moviesOn={true} // Define que a mídia exibida será de filmes
-        itemHeading="Search Results" // Cabeçalho do componente
+        itemHeading={`Results for "${query}"`} // Cabeçalho do componente
         customMedia={results} // Passa os resultados personalizados para exibição
       />
     </div>

@@ -36,27 +36,48 @@ const CoverPage: React.FC<CoverProps> = ({
   };
 
   return (
-    <div className="cover">
+    <div className={`cover ${showHeaderImage ? "has-art" : ""}`}>
       {/* Texto principal da capa */}
       <div className="coverText">
+        <span className="pill">Cinematic curation</span>
         <h1>{title}</h1> {/* Exibe o título */}
         <p>{description}</p> {/* Exibe a descrição */}
         <em>{catchyPhrase}</em> {/* Exibe a frase de destaque */}
+
+        {/* Exibe a barra de busca se showSearch for true */}
+        {showSearch && (
+          <div className="searchBar">
+            <input
+              type="search"
+              placeholder="Search for movies or shows..."
+              value={searchText}
+              onChange={(e) => setSearchText(e.target.value)}
+            />
+            <button onClick={handleSearch}>Search</button>
+          </div>
+        )}
+
+        <div className="coverStats">
+          <div className="stat">
+            <small>Updated</small>
+            <strong>Daily</strong>
+          </div>
+          <div className="stat">
+            <small>Suggestions</small>
+            <strong>Noise-free</strong>
+          </div>
+          <div className="stat">
+            <small>Favorites</small>
+            <strong>Saved</strong>
+          </div>
+        </div>
       </div>
 
       {/* Exibe a imagem de cabeçalho se showHeaderImage for true */}
-      {showHeaderImage && <img src={headerImage} alt="img" />}
-
-      {/* Exibe a barra de busca se showSearch for true */}
-      {showSearch && (
-        <div className="searchBar">
-          <input
-            type="search"
-            placeholder="Search a Movie OR TV Show..." // Placeholder do campo de busca
-            value={searchText} // Valor atual do estado da busca
-            onChange={(e) => setSearchText(e.target.value)} // Atualiza o estado com o texto digitado
-          />
-          <button onClick={handleSearch}>Search</button> {/* Botão para iniciar a busca */}
+      {showHeaderImage && (
+        <div className="coverImage">
+          <div className="coverGlow" />
+          <img src={headerImage} alt="Highlight" />
         </div>
       )}
     </div>
