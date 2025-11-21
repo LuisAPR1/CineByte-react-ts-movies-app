@@ -1,9 +1,10 @@
+import "./polyfills";
 import path from "path";
 import express, { Express, NextFunction, Request, Response } from "express";
 import { serverInfo } from "./serverInfo";
 import * as SMTP from "./SMTP";
 import { UserWorker, IUser } from "./users";
-import bcrypt from "bcrypt";
+import bcrypt from "bcryptjs";
 import jwt from "jsonwebtoken";
 import dotenv from "dotenv";
 import { v4 as uuidv4 } from "uuid";
@@ -45,6 +46,22 @@ app.post("/messages", asyncHandler(async (req: Request, res: Response) => {
 // ------------------- Rotas de Autenticação -------------------
 const userWorker = new UserWorker();
 
+const hashPassword = (password: string): Promise<string> =>
+  new Promise((resolve, reject) => {
+    bcrypt.hash(password, 10, (err, hashed) => {
+      if (err) reject(err);
+      else resolve(hashed);
+    });
+  });
+
+const comparePassword = (password: string, hashed: string): Promise<boolean> =>
+  new Promise((resolve, reject) => {
+    bcrypt.compare(password, hashed, (err, isMatch) => {
+      if (err) reject(err);
+      else resolve(isMatch);
+    });
+  });
+
 /**
  * Registro de utilizador
  */
@@ -63,7 +80,7 @@ app.post("/register", asyncHandler(async (req: Request, res: Response) => {
   }
 
   // Hash da senha
-  const hashedPassword = await bcrypt.hash(password, 10);
+  const hashedPassword = await hashPassword(password);
 
   // Geração de token de confirmação (se você for usar ativação por email)
   const confirmationToken = uuidv4();
@@ -73,7 +90,7 @@ app.post("/register", asyncHandler(async (req: Request, res: Response) => {
     username,
     email,
     password: hashedPassword,
-    isActive: false,
+    isActive: false, // Requires email confirmation
     confirmationToken,
     favorites: [], // inicia vazio
   };
@@ -127,11 +144,12 @@ app.post("/login", asyncHandler(async (req: Request, res: Response) => {
     return res.status(400).json({ message: "utilizador não encontrado." });
   }
 
-  if (!user.isActive) {
+  // Check if account is activated (must be explicitly true)
+  if (user.isActive !== true) {
     return res.status(400).json({ message: "Conta não ativada. Verifique seu e-mail." });
   }
 
-  const isMatch = await bcrypt.compare(password, user.password);
+  const isMatch = await comparePassword(password, user.password);
   if (!isMatch) {
     return res.status(400).json({ message: "Senha incorreta." });
   }
@@ -230,12 +248,12 @@ app.patch(
       return res.status(404).json({ message: "utilizador não encontrado." });
     }
 
-    const isMatch = await bcrypt.compare(currentPassword, user.password);
+    const isMatch = await comparePassword(currentPassword, user.password);
     if (!isMatch) {
       return res.status(400).json({ message: "Senha atual incorreta." });
     }
 
-    const hashedPassword = await bcrypt.hash(newPassword, 10);
+    const hashedPassword = await hashPassword(newPassword);
     await userWorker.updateUser(req.user!.userId, { password: hashedPassword });
     res.json({ message: "Senha atualizada com sucesso." });
   })

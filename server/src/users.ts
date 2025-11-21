@@ -1,7 +1,6 @@
 // users.ts
 import * as path from "path";
 const Datastore = require("nedb");
-import bcrypt from "bcrypt";
 
 // Interface que define a estrutura de um utilizador no sistema.
 export interface IUser {
@@ -9,7 +8,7 @@ export interface IUser {
   username: string;
   email: string;
   password: string;
-  isActive: boolean;
+  isActive?: boolean; // Optional for backward compatibility with legacy data
   confirmationToken: string;
   favorites?: string[]; // array de IDs de filmes favoritados
 }

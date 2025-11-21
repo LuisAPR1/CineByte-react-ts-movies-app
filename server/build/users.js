@@ -28,12 +28,14 @@ exports.UserWorker = void 0;
 const path = __importStar(require("path"));
 const Datastore = require("nedb");
 class UserWorker {
+    // Construtor que inicializa a base de dados NeDB e define o ficheiro onde os dados serão armazenados.
     constructor() {
         this.db = new Datastore({
             filename: path.join(__dirname, "users.db"),
             autoload: true,
         });
     }
+    // Procura um utilizador pelo email. Retorna o utilizador correspondente ou null se não existir.
     findUserByEmail(email) {
         return new Promise((resolve, reject) => {
             this.db.findOne({ email }, (err, doc) => {
@@ -44,6 +46,7 @@ class UserWorker {
             });
         });
     }
+    // Procura um utilizador pelo ID. Retorna o utilizador correspondente ou null se não existir.
     findUserById(id) {
         return new Promise((resolve, reject) => {
             this.db.findOne({ _id: id }, (err, doc) => {
@@ -54,6 +57,7 @@ class UserWorker {
             });
         });
     }
+    // Cria um novo utilizador na base de dados e retorna o utilizador criado.
     createUser(user) {
         return new Promise((resolve, reject) => {
             this.db.insert(user, (err, newDoc) => {
@@ -64,6 +68,7 @@ class UserWorker {
             });
         });
     }
+    // Atualiza as informações de um utilizador existente na base de dados com base no seu ID.
     updateUser(userId, updates) {
         return new Promise((resolve, reject) => {
             this.db.update({ _id: userId }, { $set: updates }, {}, (err) => {
@@ -74,6 +79,7 @@ class UserWorker {
             });
         });
     }
+    // Remove um utilizador da base de dados com base no seu ID.
     deleteUser(userId) {
         return new Promise((resolve, reject) => {
             this.db.remove({ _id: userId }, {}, (err, numRemoved) => {
@@ -84,6 +90,7 @@ class UserWorker {
             });
         });
     }
+    // Ativa um utilizador utilizando o token de confirmação, definindo o estado `isActive` como true.
     activateUser(token) {
         return new Promise((resolve, reject) => {
             this.db.findOne({ confirmationToken: token }, (err, doc) => {

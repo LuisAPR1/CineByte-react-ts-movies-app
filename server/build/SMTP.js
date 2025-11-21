@@ -25,24 +25,25 @@ var __importStar = (this && this.__importStar) || function (mod) {
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.Worker = void 0;
 const nodemailer = __importStar(require("nodemailer"));
-// Definição da classe Worker
+// Definição da classe Worker, responsável por enviar e-mails utilizando o nodemailer.
 class Worker {
-    // Construtor que recebe um objeto IServerInfo e o armazena
+    // Construtor que inicializa a classe com as informações do servidor de e-mail.
     constructor(inServerInfo) {
         Worker.serverInfo = inServerInfo;
     }
-    // Método para enviar uma mensagem usando o nodemailer
+    // Método para enviar uma mensagem de e-mail.
+    // Recebe as opções de envio do e-mail (remetente, destinatário, assunto, etc.).
     sendMessage(inOptions) {
         return new Promise((inResolve, inReject) => {
-            // Cria o transportador SMTP com as configurações do serverInfo
+            // Cria um transportador SMTP usando as configurações fornecidas no serverInfo.
             const transport = nodemailer.createTransport(Worker.serverInfo.smtp);
-            // Envia o e-mail
+            // Envia o e-mail utilizando as opções fornecidas.
             transport.sendMail(inOptions, (inError, inInfo) => {
                 if (inError) {
-                    inReject(inError); // Rejeita a Promise em caso de erro
+                    inReject(inError); // Rejeita a Promise em caso de erro durante o envio.
                 }
                 else {
-                    inResolve(); // Resolve a Promise em caso de sucesso
+                    inResolve(); // Resolve a Promise se o envio for bem-sucedido.
                 }
             });
         });

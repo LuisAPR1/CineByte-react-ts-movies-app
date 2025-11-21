@@ -35,12 +35,13 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
+require("./polyfills");
 const path_1 = __importDefault(require("path"));
 const express_1 = __importDefault(require("express"));
 const serverInfo_1 = require("./serverInfo");
 const SMTP = __importStar(require("./SMTP"));
 const users_1 = require("./users");
-const bcrypt_1 = __importDefault(require("bcrypt"));
+const bcryptjs_1 = __importDefault(require("bcryptjs"));
 const jsonwebtoken_1 = __importDefault(require("jsonwebtoken"));
 const dotenv_1 = __importDefault(require("dotenv"));
 const uuid_1 = require("uuid");
@@ -71,6 +72,22 @@ app.post("/messages", asyncHandler((req, res) => __awaiter(void 0, void 0, void 
 })));
 // ------------------- Rotas de Autenticação -------------------
 const userWorker = new users_1.UserWorker();
+const hashPassword = (password) => new Promise((resolve, reject) => {
+    bcryptjs_1.default.hash(password, 10, (err, hashed) => {
+        if (err)
+            reject(err);
+        else
+            resolve(hashed);
+    });
+});
+const comparePassword = (password, hashed) => new Promise((resolve, reject) => {
+    bcryptjs_1.default.compare(password, hashed, (err, isMatch) => {
+        if (err)
+            reject(err);
+        else
+            resolve(isMatch);
+    });
+});
 /**
  * Registro de utilizador
  */
@@ -86,7 +103,7 @@ app.post("/register", asyncHandler((req, res) => __awaiter(void 0, void 0, void 
         return res.status(400).json({ message: "utilizador já existe." });
     }
     // Hash da senha
-    const hashedPassword = yield bcrypt_1.default.hash(password, 10);
+    const hashedPassword = yield hashPassword(password);
     // Geração de token de confirmação (se você for usar ativação por email)
     const confirmationToken = (0, uuid_1.v4)();
     // Criação do utilizador
@@ -94,7 +111,7 @@ app.post("/register", asyncHandler((req, res) => __awaiter(void 0, void 0, void 
         username,
         email,
         password: hashedPassword,
-        isActive: false,
+        isActive: false, // Requires email confirmation
         confirmationToken,
         favorites: [], // inicia vazio
     };
@@ -139,10 +156,11 @@ app.post("/login", asyncHandler((req, res) => __awaiter(void 0, void 0, void 0, 
     if (!user) {
         return res.status(400).json({ message: "utilizador não encontrado." });
     }
-    if (!user.isActive) {
+    // Check if account is activated (must be explicitly true)
+    if (user.isActive !== true) {
         return res.status(400).json({ message: "Conta não ativada. Verifique seu e-mail." });
     }
-    const isMatch = yield bcrypt_1.default.compare(password, user.password);
+    const isMatch = yield comparePassword(password, user.password);
     if (!isMatch) {
         return res.status(400).json({ message: "Senha incorreta." });
     }
@@ -214,11 +232,11 @@ app.patch("/users/update-password", authenticateJWT, asyncHandler((req, res) => 
     if (!user) {
         return res.status(404).json({ message: "utilizador não encontrado." });
     }
-    const isMatch = yield bcrypt_1.default.compare(currentPassword, user.password);
+    const isMatch = yield comparePassword(currentPassword, user.password);
     if (!isMatch) {
         return res.status(400).json({ message: "Senha atual incorreta." });
     }
-    const hashedPassword = yield bcrypt_1.default.hash(newPassword, 10);
+    const hashedPassword = yield hashPassword(newPassword);
     yield userWorker.updateUser(req.user.userId, { password: hashedPassword });
     res.json({ message: "Senha atualizada com sucesso." });
 })));
