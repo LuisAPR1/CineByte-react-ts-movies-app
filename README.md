@@ -1,54 +1,79 @@
 # Movies App
 
-A full-stack web application for discovering and managing movies and TV shows. Built with React, TypeScript, and Node.js, this app provides users with a comprehensive platform to browse popular content, search for specific titles, manage favorites, and maintain user accounts. 
+> **First time here?** Check out the [**Complete Installation Guide (SETUP.md)**](SETUP.md) for detailed instructions on how to install Node.js, configure SMTP, and run the application.
+
+A full-stack web application for discovering and managing movies and TV shows. Built with React, TypeScript, and Node.js, this app provides users with a comprehensive platform to browse popular content, search for specific titles, manage favorites, and maintain user accounts.  
 **This project was developed as part of a university course assignment.**
 
+## Contents
 
-> **First time here?** Check out the [**Complete Installation Guide (SETUP.md)**](SETUP.md) for detailed instructions on how to install Node.js, configure SMTP, and run the application.
+- [Features](#features)  
+- [Tech Stack](#tech-stack)  
+- [Project Structure](#project-structure)  
+- [Installation](#installation)  
+- [Running the Application](#running-the-application)  
+- [API Endpoints](#api-endpoints)  
+- [Usage](#usage)  
+- [Contributing](#contributing)
+
+---
 
 ## Features
 
 ### Frontend Features
-- **Movie Discovery**: Browse popular, top-rated, now playing, and upcoming movies
-- **TV Show Discovery**: Explore popular, top-rated, and currently airing TV shows
-- **Advanced Search**: Search for movies and TV shows with real-time results
-- **Movie Details**: View comprehensive information about movies including cast, crew, ratings, and reviews
-- **Favorites System**: Save and manage your favorite movies and TV shows
-- **User Authentication**: Secure user registration and login system
-- **Account Management**: Edit user profile and account settings
-- **Responsive Design**: Modern, mobile-friendly interface
+
+- **Movie Discovery**: Browse popular, top-rated, now playing, and upcoming movies  
+- **TV Show Discovery**: Explore popular, top-rated, and currently airing TV shows  
+- **Advanced Search**: Search for movies and TV shows with real-time results  
+- **Movie Details**: View comprehensive information about movies including cast, crew, ratings, and reviews  
+- **Favorites System**: Save and manage your favorite movies and TV shows  
+- **User Authentication**: Secure user registration and login system  
+- **Account Management**: Edit user profile and account settings  
+- **Responsive Design**: Modern, mobile-friendly interface  
 - **Filter System**: Filter content by genre, certification, and year
 
 ### Backend Features
-- **RESTful API**: Express.js server with TypeScript
-- **User Authentication**: JWT-based authentication with bcrypt password hashing
-- **Email Verification**: SMTP integration for account activation
-- **Database**: NeDB for user data and favorites storage
+
+- **RESTful API**: Express.js server with TypeScript  
+- **User Authentication**: JWT-based authentication with bcrypt password hashing  
+- **Email Verification**: SMTP integration for account activation  
+- **Database**: NeDB for user data and favorites storage  
 - **Security**: Password hashing, JWT tokens, and input validation
+
+---
 
 ## Tech Stack
 
 ### Frontend
-- **React 18** - UI framework
-- **TypeScript** - Type safety and development experience
-- **React Router DOM** - Client-side routing
-- **Axios** - HTTP client for API requests
-- **Material-UI** - UI component library
-- **Styled Components** - CSS-in-JS styling
-- **React Icons** - Icon library
+
+| Purpose | Technology |
+|---------|------------|
+| UI Framework | React 18 |
+| Type Safety | TypeScript |
+| Routing | React Router DOM |
+| HTTP Client | Axios |
+| UI Components | Material-UI |
+| Styling | Styled Components |
+| Icons | React Icons |
 
 ### Backend
-- **Node.js** - Runtime environment
-- **Express.js** - Web framework
-- **TypeScript** - Type safety
-- **NeDB** - Embedded database
-- **JWT** - Authentication tokens
-- **bcrypt** - Password hashing
-- **Nodemailer** - Email functionality
-- **UUID** - Unique identifier generation
+
+| Purpose | Technology |
+|---------|------------|
+| Runtime | Node.js |
+| Framework | Express.js |
+| Type Safety | TypeScript |
+| Database | NeDB |
+| Authentication | JWT |
+| Password Hashing | bcrypt |
+| Email | Nodemailer |
+| ID Generation | UUID |
 
 ### External APIs
-- **The Movie Database (TMDb)** - Movie and TV show data
+
+- **The Movie Database (TMDb)** – Movie and TV show data
+
+---
 
 ## Project Structure
 
@@ -73,6 +98,8 @@ DAW/
 │   └── package.json
 └── README.md
 ```
+
+---
 
 ## Installation
 
@@ -99,12 +126,12 @@ DAW/
    ```
 
 4. **Configure environment variables**
-   
+
    Create `.env` in the `server` folder:
    ```env
    JWT_SECRET=your_jwt_secret_here
    ```
-   
+
    Edit `server/server/serverInfo.json` with SMTP credentials:
    ```json
    {
@@ -118,6 +145,8 @@ DAW/
      }
    }
    ```
+
+---
 
 ## Running the Application
 
@@ -152,46 +181,64 @@ DAW/
    npm start
    ```
 
+---
+
 ## API Endpoints
 
 ### Authentication
-- `POST /register` - User registration
-- `POST /login` - User login
-- `GET /activate?token={token}` - Account activation
+
+| Method | Endpoint | Description |
+|--------|----------|-------------|
+| POST | `/register` | User registration |
+| POST | `/login` | User login |
+| GET | `/activate?token={token}` | Account activation |
 
 ### User Management
-- `GET /profile` - Get user profile (requires authentication)
-- `PUT /profile` - Update user profile (requires authentication)
-- `GET /favorites` - Get user favorites (requires authentication)
-- `POST /favorites` - Add to favorites (requires authentication)
-- `DELETE /favorites/:id` - Remove from favorites (requires authentication)
+
+| Method | Endpoint | Description |
+|--------|----------|-------------|
+| GET | `/profile` | Get user profile (requires auth) |
+| PUT | `/profile` | Update user profile (requires auth) |
+| GET | `/favorites` | Get user favorites (requires auth) |
+| POST | `/favorites` | Add to favorites (requires auth) |
+| DELETE | `/favorites/:id` | Remove from favorites (requires auth) |
+
+---
 
 ## Usage
 
-1. **Browse Movies**: Visit the home page to see popular, top-rated, and upcoming movies
-2. **Search Content**: Use the search bar to find specific movies or TV shows
-3. **View Details**: Click on any movie or TV show to see detailed information
-4. **Create Account**: Register for an account to access personalized features
-5. **Manage Favorites**: Add movies and TV shows to your favorites list
+1. **Browse Movies**: Visit the home page to see popular, top-rated, and upcoming movies  
+2. **Search Content**: Use the search bar to find specific movies or TV shows  
+3. **View Details**: Click on any movie or TV show to see detailed information  
+4. **Create Account**: Register for an account to access personalized features  
+5. **Manage Favorites**: Add movies and TV shows to your favorites list  
 6. **Filter Content**: Use the filter bar to narrow down results by genre, year, or rating
+
+---
 
 ## Contributing
 
-1. Fork the repository
-2. Create a feature branch (`git checkout -b feature/amazing-feature`)
-3. Commit your changes (`git commit -m 'Add some amazing feature'`)
-4. Push to the branch (`git push origin feature/amazing-feature`)
+1. Fork the repository  
+2. Create a feature branch (`git checkout -b feature/amazing-feature`)  
+3. Commit your changes (`git commit -m 'Add some amazing feature'`)  
+4. Push to the branch (`git push origin feature/amazing-feature`)  
 5. Open a Pull Request
 
-## License
+---
 
-This project is licensed under the ISC License.
+## License & Acknowledgments
 
-## Acknowledgments
-
-- [The Movie Database (TMDb)](https://www.themoviedb.org/) for providing the movie and TV show data API
+- This project is licensed under the ISC License.  
+- [The Movie Database (TMDb)](https://www.themoviedb.org/) for providing the movie and TV show data API  
 - React and TypeScript communities for excellent documentation and tools
 
 ---
 
-*This README was AI generated by Claude 2.7 Sonnet*
+## Author
+
+**[LuisAPR1](https://github.com/LuisAPR1)**
+
+---
+
+*This README was auto-generated with the assistance of Claude Opus 4.5 Thinking.*
+
