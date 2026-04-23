@@ -228,17 +228,11 @@ DAW/
 
 ## License & Acknowledgments
 
-- This project is licensed under the ISC License.  
-- [The Movie Database (TMDb)](https://www.themoviedb.org/) for providing the movie and TV show data API  
-- React and TypeScript communities for excellent documentation and tools
+- Educational project developed as part of a university course.  
+- Licensed under the ISC License.  
+- [The Movie Database (TMDb)](https://www.themoviedb.org/) for the movie and TV show data API.  
+- React and TypeScript communities for excellent documentation and tools.
 
 ---
 
-## Author
-
-**[LuisAPR1](https://github.com/LuisAPR1)**
-
----
-
-*This README was auto-generated with the assistance of Claude Opus 4.5 Thinking.*
-
+*README written with supervised assistance from Claude Opus 4.7.*
